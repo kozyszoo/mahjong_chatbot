@@ -1,0 +1,59 @@
+@startuml
+
+!define p1 Player1
+!define p2 Player2
+!define p3 Player3
+!define p4 Player4
+
+participant "Chatbot" as c
+participant "Player1のSlack" as p1s
+participant "Player1" as p1
+participant "Player2のSlack" as p2s
+participant "Player2" as p2
+participant "Player3のSlack" as p3s
+participant "Player3" as p3
+participant "Player4のSlack" as p4s
+participant "Player4" as p4
+
+p1	-> p1s 			: ゲーム開始コマンドの入力
+p1s	-> c 			: ゲーム開始メッセージの送信
+c		-> c 			: 順番の設定、ドラ牌、初期牌の決定
+c 	--> p1s 		: p1 への配牌と表示
+p1s --> p1
+c 	--> p2s 		: p2 への配牌と表示
+p2s --> p2
+c 	--> p3s 		: p3 への配牌と表示
+p3s --> p3
+c 	--> p4s 		: p4 への配牌と表示
+p4s --> p4
+p1 -> p1s			: 捨てる牌の入力
+p1s	-> c 			: 牌を捨てるメッセージの送信
+
+c 	--> p2s 		: p1 が捨てた牌の表示
+p2s --> p2
+c 	--> p3s 		: p1 が捨てた牌の表示
+p3s --> p3
+c 	--> p4s 		: p1 が捨てた牌の表示
+p4s --> p4
+c   ->>	p2s		: （鳴ける場合は）鳴くかどうかの選択を問う
+p2s ->>	p2
+c		-> c 			: 誰か鳴き対象が居れば3s,そうでなければ0s~3sランダムで待機
+
+p2	-> p2s 		: 鳴く対象を入力
+p2s -> c 			: 鳴くメッセージの送信
+c 	-> c 			: 鳴けるか判定 & 反映
+p2	-> p2s 		: 捨てる牌の入力
+p2s	-> c 			: 牌を捨てるメッセージの送信
+c 	--> p1s 		: p2 が鳴いた結果、捨てた牌の表示
+p1s --> p1
+c 	--> p3s 		: p2 が鳴いた結果、捨てた牌の表示
+p3s --> p3
+c 	--> p4s 		: p2 が鳴いた結果、捨てた牌の表示
+p4s --> p4
+
+c 	-> p3s 		: p3 への配牌
+p3s 	-> p3
+p3	-> p3s 		: 捨てる牌の入力
+p3s	-> c 			: 牌を捨てる ...
+
+@enduml
