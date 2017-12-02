@@ -11,7 +11,6 @@
 ```
 $ git clone
 $ cd mahjang_chatbot
-$ bundle install
 ```
 
 ## Slackグループの管理者権限でXMPPを有効にする
@@ -27,6 +26,7 @@ https://api.slack.com/custom-integrations/legacy-tokens から取得できます
 
 ## Chatbot アプリケーションの起動
 ```
+$ bundle install
 $ bundle exec ruboty -l mahjang.rb
 ```
 
@@ -59,3 +59,11 @@ $ bundle exec ruby import.rb
 'Slack Emoji Tools' Add-on を使用すると、Drag&Drop でまとめて絵文字を追加可能
 * https://chrome.google.com/webstore/detail/slack-emoji-tools/anchoacphlfbdomdlomnbbfhcmcdmjej
 
+# Others
+
+## コードドキュメントを参照する
+
+```
+$ bundle exec yardoc *.rb
+$ open doc/index.html
+```

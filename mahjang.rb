@@ -13,9 +13,10 @@ module Ruboty
         description: 'discard tile'
       )
 
-      # ゲーム開始（初期化）
+      # @abstract ゲーム開始（初期化）
       def start(message)
-        # 全136牌の定義
+        # @abstract
+        # @param mytiles [Array] 持ち牌
       	@tiles = [	0,0,0,0,
       							1,1,1,1,
       							2,2,2,2,
@@ -52,7 +53,8 @@ module Ruboty
                     36,36,36,36
       					]
 
-        # 置換emojiの定義
+        # @abstract 置換emojiの定義
+        # @param trans_set [Array] slack emoji への変換用データセット
       	@trans_set =[	":1w:",
 	      							":2w:",
 	      							":3w:",
@@ -91,9 +93,10 @@ module Ruboty
 	      							":hatsu:",
 	      							":chun:"
       						]
+        # @param tiles [Array] 残っているの牌
       	@mytiles = []
 
-        # 初期配牌
+        # @abstract 初期配牌
       	for i in 1..13 do
       		drawn = rand(@tiles.length) # まだ引かれていない牌（山）の中から牌を選ぶ
       		@mytiles << @tiles[drawn] # 手牌に引いた牌を加える
@@ -102,8 +105,9 @@ module Ruboty
       	draw(message)
       end
 
-      # 牌を引く
+      # @abstract 牌を引く
       def draw(message)
+        # @param mytiles_str [String] 持ち牌の slack の出力用変数
       	mytiles_str = ""
       	@mytiles.sort!
       	drawn = rand(@tiles.length)
@@ -118,14 +122,14 @@ module Ruboty
       	message.reply("Left tiles number: " + @tiles.length.to_s)
       end
 
-      # 牌を切る
+      # @abstract 牌を切る
       def discard(message)
-        # 選択した牌を捨てる
+        # @abstract 選択した牌を捨てる
       	message.reply(@trans_set[@mytiles.slice!(message.body.to_s.split(" ")[1].to_i)])
         if @tiles.length >= 0
           draw(message)
         else
-          draw("Tiles aren't left. Game over.")
+          message.reply("Tiles aren't left. Game over.")
         end
       end
     end
